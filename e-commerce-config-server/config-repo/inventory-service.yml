@@ -1,0 +1,28 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: inventory-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/inventory_db
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+inventory:
+  reservation:
+    ttl-minutes: 10
+    release-on-failure-seconds: 30
+  low-stock:
+    threshold: 5
+  kafka:
+    topic:
+      stock-events: inventory.stock.events
+      reservation-events: inventory.reservation.events

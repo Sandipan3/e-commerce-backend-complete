@@ -1,0 +1,37 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/order_db
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+order:
+  reservation:
+    hold-minutes: 10
+  checkout:
+    artificial-delay-seconds: 2
+  kafka:
+    topic:
+      order-events: order.events
+      payment-events: payment.events
+
+feign:
+  user-service:
+    url: http://user-service
+  product-service:
+    url: http://product-service
+  inventory-service:
+    url: http://inventory-service
+  payment-service:
+    url: http://payment-service

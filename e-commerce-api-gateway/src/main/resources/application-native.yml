@@ -1,0 +1,14 @@
+# Local dev — no K8s. Discovery disabled, but the Java RouteLocator still works.
+spring:
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: false
+      enabled: false
+    discovery:
+      enabled: false
+
+management:
+  tracing:
+    export:
+      enabled: false

@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+app:
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - https://your-frontend.example.com
+
+jwt:
+  # MUST match user-service
+  secret: ${JWT_SECRET:change-me-super-secret-key-min-32-chars}
+  header-name: Authorization
+  header-prefix: "Bearer "
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 50
+        slow-call-rate-threshold: 100
+        slow-call-duration-threshold: 2s
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,gateway
+  endpoint:
+    health:
+      probes:
+        enabled: true

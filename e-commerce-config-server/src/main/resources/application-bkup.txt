@@ -1,0 +1,42 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:native}
+
+  security:
+    user:
+      name: ${CONFIG_USER:config-user}
+      password: ${CONFIG_PASSWORD:config-pass}
+
+encrypt:
+  key: ${CONFIG_ENCRYPT_KEY:change-me-in-prod-min-32-characters-long}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4318/v1/traces}
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.config: INFO
+    org.springframework.security: WARN

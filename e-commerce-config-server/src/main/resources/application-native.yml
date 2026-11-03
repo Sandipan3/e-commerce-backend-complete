@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+            - classpath:/config
+            - file:./config-repo
+
+management:
+  tracing:
+    export:
+      enabled: false        # <-- disables the OTLP exporter in dev

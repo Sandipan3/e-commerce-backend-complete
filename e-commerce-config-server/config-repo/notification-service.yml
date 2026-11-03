@@ -1,0 +1,32 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: notification-service
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/notification_db}
+  kafka:
+    consumer:
+      group-id: notification-service
+      auto-offset-reset: earliest
+
+brevo:
+  api-key: ${BREVO_API_KEY:}
+  sender-email: ${BREVO_SENDER_EMAIL:no-reply@example.com}
+  sender-name: ${BREVO_SENDER_NAME:E-Commerce}
+
+notification:
+  kafka:
+    topic:
+      order-events: order.events
+      payment-events: payment.events
+      inventory-events: inventory.stock.events
+  templates:
+    order-confirmed: order-confirmed
+    order-cancelled: order-cancelled
+    low-stock: low-stock-alert
+    transaction: transaction-update
+
+    #TODO: templates for admin actions
